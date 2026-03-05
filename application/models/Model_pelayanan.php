@@ -1,0 +1,157 @@
+<?php
+
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
+
+class Model_pelayanan extends CI_Model
+{
+
+    public $table = 'tbl_pelayanan';
+    public $id = 'id_pelayanan';
+    public $order = 'DESC';
+
+    function __construct()
+    {
+        parent::__construct();
+    }
+
+    // datatables
+    function json() {
+        $this->datatables->select('ref_department.name,id_pelayanan,skpd_id,nama_pejabat,keterangan,review,tbl_pelayanan.status as status_bantuan,file,create_at,update_at,delete_at');
+        $this->datatables->from('tbl_pelayanan');
+        $this->datatables->join('ref_department', 'ref_department.id_department=tbl_pelayanan.skpd_id', 'left');
+        $this->datatables->where('delete_at is  NULL', NULL, FALSE);
+        
+         
+
+        if ($_SESSION['id_user_level'] == 2) {
+        $this->datatables->where('tbl_pelayanan.skpd_id', $_SESSION['id_skpd']);
+        $this->datatables->where('delete_at is  NULL', NULL, FALSE);
+        }
+        
+        
+        //add this line for join
+        //$this->datatables->join('table2', 'tbl_pelayanan.field = table2.field');
+        $this->datatables->add_column('action', anchor(site_url('kelola_pelayanan/read/$1'),'<i class="fa fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-danger btn-sm'))." 
+            ".anchor(site_url('kelola_pelayanan/update/$1'),'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>', array('class' => 'btn btn-danger btn-sm'))." 
+                ".anchor(site_url('kelola_pelayanan/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_pelayanan');
+        return $this->datatables->generate();
+    }
+    
+     //addtional
+     function get_dokumen_pendukung($id)
+    {
+      
+      
+         $hasil=$this->db->query("SELECT
+	tbl_pelayanan.id_pelayanan, 
+	tbl_pelayanan.kode_layanan, 
+	tbl_pelayanan.skpd_id, 
+	tbl_pelayanan.nama_pejabat, 
+	tbl_pelayanan.keterangan, 
+	tbl_pelayanan.review, 
+	tbl_pelayanan.`status`,
+	tbl_file_pelayanan.kode_layanan,
+	tbl_file_pelayanan.nama_file
+
+        FROM
+	tbl_pelayanan
+	LEFT JOIN tbl_file_pelayanan ON tbl_pelayanan.kode_layanan=tbl_file_pelayanan.kode_layanan where tbl_pelayanan.id_pelayanan = '$id'");
+        return $hasil->result();
+    }
+    
+
+    // get all
+    function get_all()
+ {
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();
+    }
+
+    // get data by id
+    function get_by_id($id)
+    {   
+        $this->db->join('ref_department', 'ref_department.id_department=tbl_pelayanan.skpd_id', 'left');
+        $this->db->where($this->id, $id);
+        return $this->db->get($this->table)->row();
+    }
+    
+    // get total rows
+    function total_rows($q = NULL) {
+        $this->db->like('id_pelayanan', $q);
+	$this->db->or_like('skpd_id', $q);
+	$this->db->or_like('nama_pejabat', $q);
+	$this->db->or_like('keterangan', $q);
+	$this->db->or_like('review', $q);
+	$this->db->or_like('status', $q);
+	$this->db->or_like('file', $q);
+	$this->db->or_like('create_at', $q);
+	$this->db->or_like('update_at', $q);
+	$this->db->or_like('delete_at', $q);
+	$this->db->from($this->table);
+        return $this->db->count_all_results();
+    }
+
+    // get data with limit and search
+    function get_limit_data($limit, $start = 0, $q = NULL) {
+        $this->db->order_by($this->id, $this->order);
+        $this->db->like('id_pelayanan', $q);
+	$this->db->or_like('skpd_id', $q);
+	$this->db->or_like('nama_pejabat', $q);
+	$this->db->or_like('keterangan', $q);
+	$this->db->or_like('review', $q);
+	$this->db->or_like('status', $q);
+	$this->db->or_like('file', $q);
+	$this->db->or_like('create_at', $q);
+	$this->db->or_like('update_at', $q);
+	$this->db->or_like('delete_at', $q);
+	$this->db->limit($limit, $start);
+        return $this->db->get($this->table)->result();
+    }
+
+    // insert data
+    function insert($data)
+    {
+        $this->db->insert($this->table, $data);
+    }
+
+    // update data
+    function update($id, $data)
+    {
+        $this->db->where($this->id, $id);
+        $this->db->update($this->table, $data);
+    }
+
+    // delete data
+    function delete($id)
+    {
+//        $this->db->where($this->id, $id);
+//        $this->db->delete($this->table);
+        
+        
+         $this->db->set('delete_at',date('Y-m-d H:i:s'))
+         ->where($this->id,$id)
+        ->update('tbl_pelayanan');
+    }
+    
+    
+    function hitungfile($kode_layanan)
+{   
+        
+        $this->db->select('kode_layanan');
+        $this->db->from('tbl_file_pelayanan');
+        $this->db->where('tbl_file_pelayanan.kode_layanan',$kode_layanan);
+        $num_results = $this->db->count_all_results();
+        
+       
+
+         return $num_results;
+}
+
+}
+
+/* End of file Model_pelayanan.php */
+/* Location: ./application/models/Model_pelayanan.php */
+/* Please DO NOT modify this information : */
+/* Generated by Harviacode Codeigniter CRUD Generator 2022-09-28 15:15:32 */
+/* http://harviacode.com */

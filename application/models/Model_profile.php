@@ -1,0 +1,147 @@
+<?php
+
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
+
+class Model_profile extends CI_Model
+{
+
+    public $table = 'tbl_user';
+    public $id = 'id_users';
+    public $order = 'DESC';
+
+    function __construct()
+    {
+        parent::__construct();
+    }
+
+    // datatables
+    function json() {
+        $this->datatables->select('id_users,full_name,email,password,images,id_user_level,is_aktif,username,id_skpd,province_id,regency_id,district_id,village_id,rw_id,rt_id');
+        $this->datatables->from('tbl_user');
+
+        if ($_SESSION['id_user_level']==2) {
+            $this->datatables->where('tbl_user.id_users ', $_SESSION['id_users']);
+        }
+        //add this line for join
+        //$this->datatables->join('table2', 'tbl_user.field = table2.field');
+
+        if ($_SESSION['id_user_level']==1) {
+            $this->datatables->add_column('action', anchor(site_url('profile_user/read/$1'),'<i class="fa fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-danger btn-sm'))." 
+            ".anchor(site_url('profile_user/update/$1'),'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>', array('class' => 'btn btn-danger btn-sm'))." 
+                ".anchor(site_url('profile_user/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"'), 'id_users');
+        return $this->datatables->generate();
+        }else
+        {
+            $this->datatables->add_column('action', anchor(site_url('profile_user/read/$1'),'<i class="fa fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-danger btn-sm'))." 
+            ".anchor(site_url('profile_user/update/$1'),'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>', array('class' => 'btn btn-danger btn-sm'))." 
+                ", 'id_users');
+        return $this->datatables->generate();
+        }
+
+       
+    }
+
+    // get all
+    function get_all()
+    {
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();
+    }
+
+    // get data by id
+    function get_by_id($id)
+    {
+        $this->db->where($this->id, $id);
+        return $this->db->get($this->table)->row();
+    }
+    
+    // get total rows
+    function total_rows($q = NULL) {
+        $this->db->like('id_users', $q);
+	$this->db->or_like('full_name', $q);
+	$this->db->or_like('email', $q);
+	$this->db->or_like('password', $q);
+	$this->db->or_like('images', $q);
+	$this->db->or_like('id_user_level', $q);
+	$this->db->or_like('is_aktif', $q);
+	$this->db->or_like('username', $q);
+	$this->db->or_like('id_skpd', $q);
+	$this->db->or_like('province_id', $q);
+	$this->db->or_like('regency_id', $q);
+	$this->db->or_like('district_id', $q);
+	$this->db->or_like('village_id', $q);
+	$this->db->or_like('rw_id', $q);
+	$this->db->or_like('rt_id', $q);
+	$this->db->or_like('verified_email', $q);
+	$this->db->or_like('google_id', $q);
+	$this->db->or_like('google_image', $q);
+	$this->db->or_like('division_sub', $q);
+	$this->db->from($this->table);
+        return $this->db->count_all_results();
+    }
+
+    // get data with limit and search
+    function get_limit_data($limit, $start = 0, $q = NULL) {
+        $this->db->order_by($this->id, $this->order);
+        $this->db->like('id_users', $q);
+	$this->db->or_like('full_name', $q);
+	$this->db->or_like('email', $q);
+	$this->db->or_like('password', $q);
+	$this->db->or_like('images', $q);
+	$this->db->or_like('id_user_level', $q);
+	$this->db->or_like('is_aktif', $q);
+	$this->db->or_like('username', $q);
+	$this->db->or_like('id_skpd', $q);
+	$this->db->or_like('province_id', $q);
+	$this->db->or_like('regency_id', $q);
+	$this->db->or_like('district_id', $q);
+	$this->db->or_like('village_id', $q);
+	$this->db->or_like('rw_id', $q);
+	$this->db->or_like('rt_id', $q);
+	$this->db->or_like('verified_email', $q);
+	$this->db->or_like('google_id', $q);
+	$this->db->or_like('google_image', $q);
+	$this->db->or_like('division_sub', $q);
+	$this->db->limit($limit, $start);
+        return $this->db->get($this->table)->result();
+    }
+
+    // insert data
+    function insert($data)
+    {
+        $this->db->insert($this->table, $data);
+    }
+
+    // update data
+    function update($id, $data)
+    {
+        $this->db->where($this->id, $id);
+        $this->db->update($this->table, $data);
+    }
+
+    // delete data
+    function delete($id)
+    {
+        $this->db->where($this->id, $id);
+        $this->db->delete($this->table);
+    }
+    
+    
+    function fetch_pass($session_id)
+	{
+	$fetch_pass=$this->db->query("select * from tbl_user where id='".$_SESSION['username']."'");
+	$res=$fetch_pass->result();
+	}
+	function change_pass($session_id,$new_pass)
+	{
+	$update_pass=$this->db->query("UPDATE tbl_user set password='$new_pass'  where id='".$_SESSION['username']."'");
+	}
+
+}
+
+/* End of file Model_profile.php */
+/* Location: ./application/models/Model_profile.php */
+/* Please DO NOT modify this information : */
+/* Generated by Harviacode Codeigniter CRUD Generator 2022-08-11 04:36:10 */
+/* http://harviacode.com */
