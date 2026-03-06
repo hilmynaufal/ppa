@@ -671,7 +671,9 @@ class Kelola_berita_acara extends CI_Controller
 		xlsWriteLabel($tablehead, $kolomhead++, "User Id");
 
 		$tahun = $this->input->get('tahun', TRUE);
-		foreach ($this->Model_berita_acara->get_all($tahun) as $data) {
+		$bulan = $this->input->get('bulan', TRUE);
+		$tanggal = $this->input->get('tanggal', TRUE);
+		foreach ($this->Model_berita_acara->get_all($tahun, $bulan, $tanggal) as $data) {
 			$kolombody = 0;
 
 			//ubah xlsWriteLabel menjadi xlsWriteNumber untuk kolom numeric

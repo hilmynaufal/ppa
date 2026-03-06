@@ -46,11 +46,18 @@ class Model_berita_acara extends CI_Model
     }
 
     // get all
-    function get_all($tahun = NULL)
+    function get_all($tahun = NULL, $bulan = NULL, $tanggal = NULL)
     {
         $this->db->order_by($this->id, $this->order);
-        if ($tahun) {
-            $this->db->where("YEAR(berita_acara_tgl)", $tahun);
+        if ($tanggal) {
+            $this->db->where("DATE(berita_acara_tgl)", $tanggal);
+        } else {
+            if ($tahun) {
+                $this->db->where("YEAR(berita_acara_tgl)", $tahun);
+            }
+            if ($bulan) {
+                $this->db->where("MONTH(berita_acara_tgl)", $bulan);
+            }
         }
         return $this->db->get($this->table)->result();
     }

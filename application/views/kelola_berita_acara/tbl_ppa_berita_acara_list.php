@@ -17,7 +17,7 @@
                             <div class="col-md-6 text-right">
                                 <form class="form-inline">
                                     <div class="form-group">
-                                        <label for="filter_tahun">Filter Tahun: </label>
+                                        <label for="filter_tahun">Tahun: </label>
                                         <select id="filter_tahun" class="form-control input-sm">
                                             <option value="">Semua Tahun</option>
                                             <?php
@@ -28,6 +28,28 @@
                                             }
                                             ?>
                                         </select>
+                                    </div>
+                                    <div class="form-group" style="margin-left: 10px;">
+                                        <label for="filter_bulan">Bulan: </label>
+                                        <select id="filter_bulan" class="form-control input-sm">
+                                            <option value="">Semua Bulan</option>
+                                            <option value="01">Januari</option>
+                                            <option value="02">Februari</option>
+                                            <option value="03">Maret</option>
+                                            <option value="04">April</option>
+                                            <option value="05">Mei</option>
+                                            <option value="06">Juni</option>
+                                            <option value="07">Juli</option>
+                                            <option value="08">Agustus</option>
+                                            <option value="09">September</option>
+                                            <option value="10">Oktober</option>
+                                            <option value="11">November</option>
+                                            <option value="12">Desember</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" style="margin-left: 10px;">
+                                        <label for="filter_tanggal">Tanggal: </label>
+                                        <input type="date" id="filter_tanggal" class="form-control input-sm">
                                     </div>
                                 </form>
                             </div>
@@ -86,10 +108,24 @@
                         }
                     });
 
-                $('#filter_tahun').change(function () {
-                    var tahun = $(this).val();
-                    console.log(tahun);
-                    api.search(tahun).draw();
+                $('#filter_tahun, #filter_bulan, #filter_tanggal').change(function () {
+                    var tahun = $('#filter_tahun').val();
+                    var bulan = $('#filter_bulan').val();
+                    var tanggal = $('#filter_tanggal').val();
+
+                    var searchValue = '';
+                    if (tanggal) {
+                        searchValue = tanggal; // Jika ada tanggal spesifik (YYYY-MM-DD), cari dengan ini
+                    } else if (tahun && bulan) {
+                        searchValue = tahun + '-' + bulan; // YYYY-MM
+                    } else if (tahun) {
+                        searchValue = tahun;
+                    } else if (bulan) {
+                        searchValue = '-' + bulan + '-'; // Format DB biasanya YYYY-MM-DD
+                    }
+
+                    // Kita akan menggunakan column(3).search() di bawah, bukan api.search() global yang mencari semua kolom
+                    // api.search(searchValue).draw(); // Dihapus karena menggunakan column search lebih tepat
                 });
             },
             oLanguage: {
@@ -149,17 +185,53 @@
             }
         });
 
-        $('#filter_tahun').change(function () {
-            var tahun = $(this).val();
-            console.log(tahun);
-            t.api().column(3).search(tahun).draw();
+        $('#filter_tahun, #filter_bulan, #filter_tanggal').change(function () {
+            var tahun = $('#filter_tahun').val();
+            var bulan = $('#filter_bulan').val();
+            var tanggal = $('#filter_tanggal').val();
+
+            var searchValue = '';
+            if (tanggal) {
+                searchValue = tanggal;
+                // Kosongkan tahun dan bulan agar tidak membingungkan pengguna
+                $('#filter_tahun').val('');
+                $('#filter_bulan').val('');
+            } else if (tahun && bulan) {
+                searchValue = tahun + '-' + bulan;
+                $('#filter_tanggal').val('');
+            } else if (tahun) {
+                searchValue = tahun;
+                $('#filter_tanggal').val('');
+            } else if (bulan) {
+                searchValue = '-' + bulan + '-';
+                $('#filter_tanggal').val('');
+            }
+
+            console.log("Search Date:", searchValue);
+            t.api().column(3).search(searchValue).draw();
 
             // Update excel link
             var excelUrl = "<?php echo site_url('kelola_berita_acara/excel') ?>";
-            if (tahun) {
-                excelUrl += "?tahun=" + tahun;
+            var params = [];
+
+            if (tanggal) {
+                params.push("tanggal=" + tanggal);
+            } else {
+                if (tahun) params.push("tahun=" + tahun);
+                if (bulan) params.push("bulan=" + bulan);
+            }
+
+            if (params.length > 0) {
+                excelUrl += "?" + params.join("&");
             }
             $('#btn-excel').attr('href', excelUrl);
+        });
+
+        // Handling when specific date is cleared
+        $('#filter_tanggal').on('input', function() {
+            if (!$(this).val()) {
+                $(this).trigger('change');
+            }
         });
 
 
