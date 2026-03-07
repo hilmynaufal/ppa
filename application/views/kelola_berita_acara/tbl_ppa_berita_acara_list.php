@@ -132,7 +132,8 @@
                 sProcessing: "loading..."
             },
             processing: true,
-            serverSide: true,
+            // bFilter: true,
+            // serverSide: true,
 
 
             order: [[3, "desc"]],
@@ -208,6 +209,8 @@
             }
 
             console.log("Search Date:", searchValue);
+            console.log(searchValue);
+            console.log(t.api().column(3).data().toArray());
             t.api().column(3).search(searchValue).draw();
 
             // Update excel link
@@ -228,7 +231,7 @@
         });
 
         // Handling when specific date is cleared
-        $('#filter_tanggal').on('input', function() {
+        $('#filter_tanggal').on('input', function () {
             if (!$(this).val()) {
                 $(this).trigger('change');
             }
