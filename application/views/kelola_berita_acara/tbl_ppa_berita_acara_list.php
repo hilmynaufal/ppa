@@ -1,5 +1,48 @@
 <div class="content-wrapper">
     <section class="content">
+        <!-- Komponen Card Statistik -->
+        <div class="row">
+            <div class="col-lg-4 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3><?php echo isset($stats['total']) ? $stats['total'] : 0; ?></h3>
+                        <p>Total Berita Acara</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-list"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-4 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3><?php echo isset($stats['bulan_ini']) ? $stats['bulan_ini'] : 0; ?></h3>
+                        <p>Berita Acara Bulan Ini</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-calendar"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-4 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3><?php echo isset($stats['pending']) ? $stats['pending'] : 0; ?></h3>
+                        <p>Berita Acara Pending</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-clock-o"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+
         <div class="row">
             <div class="col-xs-12">
                 <div class="box box-warning box-solid">

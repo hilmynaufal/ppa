@@ -256,6 +256,37 @@ class Model_berita_acara extends CI_Model
         );
     }
 
+    // get stats for list page
+    function get_berita_acara_stats()
+    {
+        $this->db->from($this->table);
+        if ($_SESSION['id_user_level'] == 3) {
+            $this->db->where('user_id', $_SESSION['id_users']);
+        }
+        $total = $this->db->count_all_results();
+
+        $this->db->from($this->table);
+        $this->db->where('MONTH(berita_acara_tgl)', date('m'));
+        $this->db->where('YEAR(berita_acara_tgl)', date('Y'));
+        if ($_SESSION['id_user_level'] == 3) {
+            $this->db->where('user_id', $_SESSION['id_users']);
+        }
+        $bulan_ini = $this->db->count_all_results();
+
+        $this->db->from($this->table);
+        $this->db->where('berita_acara_status', 1);
+        if ($_SESSION['id_user_level'] == 3) {
+            $this->db->where('user_id', $_SESSION['id_users']);
+        }
+        $pending = $this->db->count_all_results();
+
+        return array(
+            'total' => $total,
+            'bulan_ini' => $bulan_ini,
+            'pending' => $pending
+        );
+    }
+
 }
 
 /* End of file Model_berita_acara.php */

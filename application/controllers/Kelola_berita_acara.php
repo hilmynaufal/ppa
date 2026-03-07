@@ -17,7 +17,8 @@ class Kelola_berita_acara extends CI_Controller
 
 	public function index()
 	{
-		$this->template->load('template', 'kelola_berita_acara/tbl_ppa_berita_acara_list');
+		$data['stats'] = $this->Model_berita_acara->get_berita_acara_stats();
+		$this->template->load('template', 'kelola_berita_acara/tbl_ppa_berita_acara_list', $data);
 	}
 
 	public function json()
