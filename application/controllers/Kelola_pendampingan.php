@@ -25,6 +25,43 @@ class Kelola_pendampingan extends CI_Controller
         echo $this->Model_pendampingan->json();
     }
 
+    public function report($id)
+    {
+        $row = $this->Model_pendampingan->get_by_id($id);
+        if ($row) {
+            // Kita sudah punya $row yang berisi data tbl_ppa_pendampingan yang di-join dengan tbl_ppa_berita_acara
+            // Dapatkan seluruh pendampingan untuk berita acara ini
+            $this->db->where('kode_beritaacara', $row->kode_beritaacara);
+            $this->db->order_by('layanan_tgl', 'ASC');
+            $pendampingan_list = $this->db->get('tbl_ppa_pendampingan')->result();
+
+            $data = array(
+                'berita_acara_kode' => $row->kode_beritaacara,
+                'korban_nama' => $row->korban_nama,
+                'korban_usia' => $row->korban_usia,
+                'korban_tempat' => $row->korban_tempat,
+                'korban_tgl_lahir' => $row->korban_tgl_lahir,
+                'korban_desa' => $this->get_region_name('reg_villages', $row->korban_desa),
+                'korban_kec' => $this->get_region_name('reg_districts', $row->korban_kec),
+                'korban_kab' => $this->get_region_name('reg_regencies', $row->korban_kab),
+                'lapor_kategori' => $row->lapor_kategori,
+                'pendampingan_list' => $pendampingan_list
+            );
+            $this->load->view('kelola_pendampingan/tbl_ppa_pendampingan_report', $data);
+        } else {
+            $this->session->set_flashdata('message', 'Record Not Found');
+            redirect(site_url('kelola_pendampingan'));
+        }
+    }
+
+    private function get_region_name($table, $id)
+    {
+        if (empty($id)) return '';
+        $query = $this->db->get_where($table, array('id' => $id));
+        $row = $query->row();
+        return ($row) ? $row->name : '';
+    }
+
     public function read($id) 
     {
         $row = $this->Model_pendampingan->get_by_id($id);
