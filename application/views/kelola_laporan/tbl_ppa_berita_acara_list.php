@@ -76,8 +76,21 @@
                                                 <th>Disposisi Laporan</th>
                                                 <th>Nama Pelapor</th>
                                                 <th>Telepon Pelapor</th>
+                                                <th>NIK Korban</th>
                                                 <th>Nama Korban</th>
+                                                <th>Jenis Kelamin Korban</th>
+                                                <th>Agama Korban</th>
+                                                <th>Tgl Lahir Korban</th>
+                                                <th>Alamat Korban (Kab, Kec, Desa)</th>
+                                                <th>Telepon Korban</th>
+                                                <th>Tanggal Kejadian</th>
+                                                <th>NIK Pelaku</th>
                                                 <th>Nama Pelaku</th>
+                                                <th>Jenis Kelamin Pelaku</th>
+                                                <th>Usia Pelaku</th>
+                                                <th>Hubungan Pelaku</th>
+                                                <th>Pendidikan Pelaku</th>
+                                                <th>Alamat Pelaku (Kab, Kec, Desa)</th>
                                                 <th>Keterangan</th>
                                             </tr>
                                         </thead>
@@ -96,8 +109,21 @@
                                                     <td><?php echo $d->lapor_disposisi; ?></td>
                                                     <td><?php echo $d->pelapor_nama; ?></td>
                                                     <td><?php echo $d->pelapor_telepon; ?></td>
+                                                    <td><?php echo $d->korban_nik; ?></td>
                                                     <td><?php echo $d->korban_nama; ?></td>
+                                                    <td><?php echo $d->korban_jeniskelamin; ?></td>
+                                                    <td><?php echo $d->korban_agama; ?></td>
+                                                    <td><?php echo $d->korban_tgl_lahir; ?></td>
+                                                    <td><?php echo $d->korban_kab . ', ' . $d->korban_kec . ', ' . $d->korban_desa; ?></td>
+                                                    <td><?php echo $d->korban_telepon; ?></td>
+                                                    <td><?php echo $d->korban_tglkejadian; ?></td>
+                                                    <td><?php echo $d->pelaku_nik; ?></td>
                                                     <td><?php echo $d->pelaku_nama; ?></td>
+                                                    <td><?php echo $d->pelaku_jenis_kelamin; ?></td>
+                                                    <td><?php echo $d->pelaku_usia; ?></td>
+                                                    <td><?php echo $d->pelaku_hubungan; ?></td>
+                                                    <td><?php echo $d->pelaku_pendidikan; ?></td>
+                                                    <td><?php echo $d->pelaku_kab . ', ' . $d->pelaku_kec . ', ' . $d->pelaku_desa; ?></td>
                                                     <td><?php echo $d->berita_acara_keterangan; ?></td>
                                                 </tr>
                                                 <?php
