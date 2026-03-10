@@ -35,7 +35,7 @@ class Model_pendampingan extends CI_Model
         $this->datatables->group_by('tbl_ppa_pendampingan.layanan_id');
         $this->datatables->add_column('action', anchor(site_url('kelola_pendampingan/read/$1'),'<i class="fa fa-eye" aria-hidden="true"></i>', array('class' => 'btn btn-danger btn-sm'))." 
             ".anchor(site_url('kelola_pendampingan/update/$1'),'<i class="fa fa-pencil-square-o" aria-hidden="true"></i>', array('class' => 'btn btn-danger btn-sm'))." 
-                ".anchor(site_url('kelola_pendampingan/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')")."
+                ".anchor(site_url('kelola_pendampingan/delete/$1'),'<i class="fa fa-trash-o" aria-hidden="true"></i>','class="btn btn-danger btn-sm" onclick="javasciprt: return confirm(\'Are You Sure ?\')"')."
                 ".anchor(site_url('kelola_pendampingan/report/$1'),'<i class="fa fa-file-pdf-o" aria-hidden="true"></i>', array('class' => 'btn btn-primary btn-sm', 'target' => '_blank')), 'layanan_id');
         return $this->datatables->generate();
     }
