@@ -114,7 +114,8 @@
             margin-top: 10px;
         }
 
-        .table-data th, .table-data td {
+        .table-data th,
+        .table-data td {
             border: 1px solid #000;
             padding: 5px;
             text-align: left;
@@ -178,6 +179,7 @@
                 width: 100%;
                 max-width: 100%;
             }
+
             .header {
                 border-bottom: 3px double #000;
             }
@@ -187,22 +189,7 @@
 </head>
 
 <body>
-    <div class="header">
-        <div class="header-content">
-            <div class="logo-container"><img src="<?php echo base_url('assets/images/logo_bandungkab.png'); ?>"
-                    alt="Logo Kabupaten Bandung"></div>
-            <div class="text-container">
-                <h1>PEMERINTAH KABUPATEN BANDUNG</h1>
-                <h2>DINAS PENGENDALIAN PENDUDUK,
-                    KELUARGA BERENCANA,
-                    <br>PEMBERDAYAAN PEREMPUAN DAN PERLINDUNGAN ANAK
-                </h2>
-                <h2>UPTD PERLINDUNGAN PEREMPUAN DAN ANAK</h2>
-                <p>Jl. Raya Soreang KM. 17 Telp. (022) 5897180 Soreang 40911</p>
-                <p>Kabupaten Bandung Provinsi Jawa Barat</p>
-            </div>
-        </div>
-    </div>
+
     <div class="title-section">
         <h3>RESUME PENDAMPINGAN</h3>
     </div>
@@ -227,7 +214,9 @@
                 <div class="field-group">
                     <div class="field-label">Tempat Tanggal Lahir</div>
                     <div class="field-dots">:</div>
-                    <div class="field-value"><?php echo ($korban_tempat ? $korban_tempat . ', ' : '') . $korban_tgl_lahir; ?></div>
+                    <div class="field-value">
+                        <?php echo ($korban_tempat ? $korban_tempat . ', ' : '') . $korban_tgl_lahir; ?>
+                    </div>
                 </div>
                 <div class="field-group">
                     <div class="field-label">Alamat</div>
@@ -263,38 +252,31 @@
                         $no = 1;
                         if (!empty($pendampingan_list)) {
                             foreach ($pendampingan_list as $row) {
-                        ?>
-                        <tr>
-                            <td style="text-align: center;"><?php echo $no++; ?></td>
-                            <td><?php echo date('d-m-Y', strtotime($row->layanan_tgl)); ?></td>
-                            <td>
-                                <strong>Jenis Layanan:</strong> <?php echo $row->layanan_jenis; ?><br>
-                                <strong>Keterangan:</strong> <?php echo $row->layanan_keterangan; ?><br>
-                                <strong>Tindak Lanjut:</strong> <?php echo $row->tindak_lanjut1; ?>
-                            </td>
-                            <td></td>
-                        </tr>
-                        <?php
+                                ?>
+                                <tr>
+                                    <td style="text-align: center;"><?php echo $no++; ?></td>
+                                    <td><?php echo date('d-m-Y', strtotime($row->layanan_tgl)); ?></td>
+                                    <td>
+                                        <strong>Jenis Layanan:</strong> <?php echo $row->layanan_jenis; ?><br>
+                                        <strong>Keterangan:</strong> <?php echo $row->layanan_keterangan; ?><br>
+                                        <strong>Tindak Lanjut:</strong> <?php echo $row->tindak_lanjut1; ?>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <?php
                             }
                         } else {
-                        ?>
-                        <tr>
-                            <td colspan="4" style="text-align: center;">Belum ada data pendampingan</td>
-                        </tr>
+                            ?>
+                            <tr>
+                                <td colspan="4" style="text-align: center;">Belum ada data pendampingan</td>
+                            </tr>
                         <?php } ?>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <div class="signature-section">
-            <div class="sig-box">
-                <p>Mengetahui,</p>
-                <p>KEPALA UPTD PPA</p>
-                <div class="sig-space"></div>
-                <p><b>............................................</b><br>NIP. ............................................</p>
-            </div>
-        </div>
+
     </div>
     <script>
         window.print();
