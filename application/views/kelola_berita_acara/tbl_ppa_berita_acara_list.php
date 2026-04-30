@@ -176,7 +176,7 @@
             },
             processing: true,
             // bFilter: true,
-            // serverSide: true,
+            serverSide: true,
 
 
             order: [[3, "desc"]],
@@ -251,10 +251,10 @@
                 $('#filter_tanggal').val('');
             }
 
-            console.log("Search Date:", searchValue);
-            console.log(searchValue);
-            console.log(t.api().column(3).data().toArray());
-            t.api().column(3).search(searchValue).draw();
+            // console.log("Search Date:", searchValue);
+            // console.log(searchValue);
+            // console.log(t.api().column(3).data().toArray());
+            t.api().search(searchValue).draw();
 
             // Update excel link
             var excelUrl = "<?php echo site_url('kelola_berita_acara/excel') ?>";
