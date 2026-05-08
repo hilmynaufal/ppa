@@ -161,6 +161,10 @@
                                         </tr>
 
                                         <tr>
+                                            <td width='200'>Tempat Lahir Korban <?php echo form_error('korban_tempat_lahir') ?></td><td><input type="text" class="form-control" name="korban_tempat_lahir" id="korban_tempat_lahir" placeholder="Tempat Lahir Korban" value="<?php echo $korban_tempat_lahir; ?>" /></td>
+                                        </tr>
+
+                                        <tr>
                                             <td width='200'> Tgl Lahir Korban<?php echo form_error('korban_tgl_lahir') ?></td>
                                             <td><input type="date" class="form-control" name="korban_tgl_lahir" id="korban_tgl_lahir" placeholder="Korban Tgl Lahir" value="<?php echo $korban_tgl_lahir; ?>" /></td>
                                         </tr>

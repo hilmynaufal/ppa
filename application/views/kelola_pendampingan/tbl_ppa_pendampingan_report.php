@@ -212,11 +212,9 @@
                     <div class="field-value"><?php echo $korban_usia; ?></div>
                 </div>
                 <div class="field-group">
-                    <div class="field-label">Tempat Tanggal Lahir</div>
+                    <div class="field-label">Tanggal Lahir</div>
                     <div class="field-dots">:</div>
-                    <div class="field-value">
-                        <?php echo ($korban_tempat ? $korban_tempat . ', ' : '') . $korban_tgl_lahir; ?>
-                    </div>
+                    <div class="field-value"><?php echo $korban_tgl_lahir; ?></div>
                 </div>
                 <div class="field-group">
                     <div class="field-label">Alamat</div>

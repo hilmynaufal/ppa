@@ -199,7 +199,7 @@ class Model_berita_acara extends CI_Model
 
             $this->db->where('tbl_ppa_berita_acara.user_id', $_SESSION['id_users']);
         }
-        $this->db->where('1=1 AND berita_acara_status=1');
+        $this->db->where('berita_acara_status IN (1,2)', NULL, FALSE);
         return $this->db->get($this->table)->result();
     }
 
