@@ -68,63 +68,48 @@
                                         <thead>
                                             <tr>
                                                 <th>No</th>
-                                                <th>Tanggal Berita Acara</th>
-                                                <th>Kode Berita Acara</th>
-                                                <th>Status Berita Acara</th>
-                                                <th>Kategori Laporan</th>
-                                                <th>Status Laporan</th>
-                                                <th>Disposisi Laporan</th>
-                                                <th>Nama Pelapor</th>
-                                                <th>Telepon Pelapor</th>
-                                                <th>NIK Korban</th>
+                                                <th>Tgl Berita Acara</th>
                                                 <th>Nama Korban</th>
-                                                <th>Jenis Kelamin Korban</th>
-                                                <th>Agama Korban</th>
-                                                <th>Tgl Lahir Korban</th>
-                                                <th>Alamat Korban (Kab, Kec, Desa)</th>
-                                                <th>Telepon Korban</th>
-                                                <th>Tanggal Kejadian</th>
-                                                <th>NIK Pelaku</th>
-                                                <th>Nama Pelaku</th>
-                                                <th>Jenis Kelamin Pelaku</th>
-                                                <th>Usia Pelaku</th>
-                                                <th>Hubungan Pelaku</th>
-                                                <th>Pendidikan Pelaku</th>
-                                                <th>Alamat Pelaku (Kab, Kec, Desa)</th>
+                                                <th>Jenis Kelamin</th>
+                                                <th>Usia/Tgl Lahir</th>
+                                                <th>Alamat</th>
+                                                <th>Jenis Kekerasan</th>
+                                                <th>Kronologi</th>
                                                 <th>Keterangan</th>
+                                                <th>Telepon Korban</th>
+                                                <th>Tgl Kejadian</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <?php
                                             $no = 1;
                                             foreach ($laporan_all as $d):
+                                                $tgl_lahir = $d->korban_tgl_lahir;
+                                                if ($tgl_lahir && $tgl_lahir != '0000-00-00') {
+                                                    $lahir = new DateTime($tgl_lahir);
+                                                    $usia = $lahir->diff(new DateTime())->y;
+                                                    $usia_display = $usia . ' tahun (' . $tgl_lahir . ')';
+                                                } else {
+                                                    $usia_display = $tgl_lahir;
+                                                }
+                                                $alamat = implode(', ', array_filter([
+                                                    $d->korban_kab_nama,
+                                                    $d->korban_kec_nama,
+                                                    $d->korban_desa_nama,
+                                                ]));
                                                 ?>
                                                 <tr>
                                                     <td><?php echo $no++; ?></td>
                                                     <td><?php echo $d->berita_acara_tgl; ?></td>
-                                                    <td><?php echo $d->berita_acara_kode; ?></td>
-                                                    <td><?php echo $d->berita_acara_status; ?></td>
-                                                    <td><?php echo $d->lapor_kategori; ?></td>
-                                                    <td><?php echo $d->lapor_status; ?></td>
-                                                    <td><?php echo $d->lapor_disposisi; ?></td>
-                                                    <td><?php echo $d->pelapor_nama; ?></td>
-                                                    <td><?php echo $d->pelapor_telepon; ?></td>
-                                                    <td><?php echo $d->korban_nik; ?></td>
                                                     <td><?php echo $d->korban_nama; ?></td>
                                                     <td><?php echo $d->korban_jeniskelamin; ?></td>
-                                                    <td><?php echo $d->korban_agama; ?></td>
-                                                    <td><?php echo $d->korban_tgl_lahir; ?></td>
-                                                    <td><?php echo $d->korban_kab . ', ' . $d->korban_kec . ', ' . $d->korban_desa; ?></td>
+                                                    <td><?php echo $usia_display; ?></td>
+                                                    <td><?php echo $alamat; ?></td>
+                                                    <td><?php echo $d->lapor_kategori; ?></td>
+                                                    <td><?php echo $d->berita_acara_kronologi; ?></td>
+                                                    <td><?php echo $d->berita_acara_keterangan; ?></td>
                                                     <td><?php echo $d->korban_telepon; ?></td>
                                                     <td><?php echo $d->korban_tglkejadian; ?></td>
-                                                    <td><?php echo $d->pelaku_nik; ?></td>
-                                                    <td><?php echo $d->pelaku_nama; ?></td>
-                                                    <td><?php echo $d->pelaku_jenis_kelamin; ?></td>
-                                                    <td><?php echo $d->pelaku_usia; ?></td>
-                                                    <td><?php echo $d->pelaku_hubungan; ?></td>
-                                                    <td><?php echo $d->pelaku_pendidikan; ?></td>
-                                                    <td><?php echo $d->pelaku_kab . ', ' . $d->pelaku_kec . ', ' . $d->pelaku_desa; ?></td>
-                                                    <td><?php echo $d->berita_acara_keterangan; ?></td>
                                                 </tr>
                                                 <?php
                                             endforeach;
@@ -134,12 +119,6 @@
                                 </div>
                             </div>
 
-                            <center>
-                                <iframe
-                                    src="https://metabase.bandungkab.go.id/public/question/084ad674-966d-427d-90d9-2f3133fdb4d7"
-                                    frameborder="0" width="1240px" height="900px" allowtransparency></iframe>
-
-                            </center>
                             <div class="row">
                                 <div class="col-md-6">
 

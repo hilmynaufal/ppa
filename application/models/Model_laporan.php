@@ -18,11 +18,16 @@ class Model_laporan extends CI_Model
 	// get all
 	function get_all($tahun = NULL)
 	{
-		$this->db->order_by($this->id, $this->order);
+		$this->db->select('tbl_ppa_berita_acara.*, rk.name as korban_kab_nama, rkc.name as korban_kec_nama, rv.name as korban_desa_nama');
+		$this->db->from($this->table);
+		$this->db->join('reg_regencies rk', 'rk.id = tbl_ppa_berita_acara.korban_kab', 'left');
+		$this->db->join('reg_districts rkc', 'rkc.id = tbl_ppa_berita_acara.korban_kec', 'left');
+		$this->db->join('reg_villages rv', 'rv.id = tbl_ppa_berita_acara.korban_desa', 'left');
+		$this->db->order_by('tbl_ppa_berita_acara.' . $this->id, $this->order);
 		if ($tahun) {
-			$this->db->where("YEAR(berita_acara_tgl)", $tahun);
+			$this->db->where("YEAR(tbl_ppa_berita_acara.berita_acara_tgl)", $tahun);
 		}
-		return $this->db->get($this->table)->result();
+		return $this->db->get()->result();
 	}
 
 	// get data by id
