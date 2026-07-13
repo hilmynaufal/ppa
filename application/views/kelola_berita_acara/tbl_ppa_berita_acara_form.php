@@ -455,7 +455,7 @@
                                     <td width='200'>Propinsi Pelaku<?php echo form_error('pelaku_prop') ?></td>
                                     <td>
 
-                                        <?php echo cmb_dinamis_propinsi('pelaku_prop', 'reg_provinces', 'name', 'id', $pelaku_prop, 'asc') ?>
+                                        <?php echo cmb_dinamis_propinsi2('pelaku_prop', 'reg_provinces', 'name', 'id', $pelaku_prop, 'asc') ?>
                                     </td>
                                 </tr>
                                 <tr class="row_lokasi_pelaku">
@@ -466,8 +466,8 @@
                                             <?php echo cmb_dinamis_propinsi('pelaku_kab', 'reg_regencies', 'name', 'id', $pelaku_kab, 'asc') ?>
                                         <?PHP } else { ?>
 
-                                            <select name="pelaku_kab" class="id_kab form-control"
-                                                id="pilih_kecamatan"></select>
+                                            <select name="pelaku_kab" class="id_kab_pelaku form-control"
+                                                id="pilih_kecamatan2"></select>
 
                                         <?PHP } ?>
 
@@ -483,11 +483,27 @@
                                             <?php echo cmb_dinamis_propinsi('pelaku_kec', 'reg_districts', 'name', 'id', $pelaku_kec, 'asc') ?>
                                         <?PHP } else { ?>
 
-                                            <select name="pelaku_kec" class="id_kec form-control"></select>
+                                            <select name="pelaku_kec" class="id_kec_pelaku form-control" id="pilih_desa2"></select>
                                         <?PHP } ?>
 
                                     </td>
                                 </tr>
+                                <?PHP if ($pelaku_desa == '') { ?>
+                                    <tr class="row_lokasi_pelaku">
+                                        <td width='200'>Desa Pelaku<?php echo form_error('pelaku_desa') ?></td>
+                                        <td>
+
+                                            <select name="pelaku_desa" class="id_desa_pelaku form-control"> </select>
+                                        </td>
+                                    </tr>
+                                <?PHP } else { ?>
+                                    <tr class="row_lokasi_pelaku">
+                                        <td width='200'>Desa Pelaku<?php echo form_error('pelaku_desa') ?></td>
+                                        <td>
+                                            <?php echo cmb_dinamis_propinsi('pelaku_desa', 'reg_villages', 'name', 'id', $pelaku_desa, 'asc') ?>
+                                        </td>
+                                    </tr>
+                                <?PHP } ?>
 
 
 
@@ -898,7 +914,7 @@
                                                 for (i = 0; i < data.length; i++) {
                                                     html += '<option value=' + data[i].id_kab + '>' + data[i].name_province + '</option>';
                                                 }
-                                                $('.id_kab').html(html);
+                                                $('.id_kab_pelaku').html(html);
 
                                             }
                                         });
@@ -922,7 +938,7 @@
                                                 for (i = 0; i < data.length; i++) {
                                                     html += '<option value=' + data[i].id_kec + '>' + data[i].nama_kec + '</option>';
                                                 }
-                                                $('.id_kec').html(html);
+                                                $('.id_kec_pelaku').html(html);
 
                                             }
                                         });
@@ -949,7 +965,7 @@
                                                 for (i = 0; i < data.length; i++) {
                                                     html += '<option value=' + data[i].id_desa + '>' + data[i].nama_desa + '</option>';
                                                 }
-                                                $('.id_desa').html(html);
+                                                $('.id_desa_pelaku').html(html);
 
                                             }
                                         });

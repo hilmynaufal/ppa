@@ -101,6 +101,7 @@
                             <thead>
                                 <tr>
                                     <th width="30px">No</th>
+                                    <th width="200px">Action</th>
                                     <th>Berita Acara Kode</th>
                                     <th>Berita Acara Status</th>
                                     <th>Berita Acara Tgl</th>
@@ -108,8 +109,6 @@
                                     <th>Pelapor Nik</th>
                                     <th>Korban Nik</th>
                                     <th>Korban Nama</th>
-
-                                    <th width="200px">Action</th>
                                 </tr>
                             </thead>
 
@@ -187,7 +186,11 @@
                     "data": "berita_acara_id",
                     "orderable": false
                 },
-
+                {
+                    "data": "action",
+                    "orderable": false,
+                    "className": "text-center"
+                },
                 { "data": "berita_acara_kode" },
                 {
                     className: "center",
@@ -213,11 +216,6 @@
                 { "data": "korban_nama" },
                 //     {"data": "korban_jeniskelamin"},
                 //    {"data": "korban_agama"},{"data": "korban_tempat"},{"data": "korban_tgl_lahir"},{"data": "korban_prop"},{"data": "korban_kab"},{"data": "korban_kec"},{"data": "korban_desa"},{"data": "korban_foto1"},{"data": "korban_foto2"},{"data": "korban_email"},{"data": "korban_telepon"},{"data": "korban_tglkejadian"},{"data": "pelaku_nama"},{"data": "pelaku_jenis_kelamin"},{"data": "pelaku_usia"},{"data": "pelaku_hubungan"},{"data": "pelaku_pendidikan"},{"data": "pelaku_alamat"},{"data": "pelaku_prop"},{"data": "pelaku_kab"},{"data": "pelaku_kec"},{"data": "pelaku_desa"},{"data": "pelaku_nik"},{"data": "lapor_anonim"},{"data": "lapor_rahasia"},{"data": "lapor_status"},{"data": "lapor_kategori"},{"data": "lapor_disposisi"},{"data": "lapor_klarifikasi"},{"data": "create_at"},{"data": "update_at"},{"data": "delete_at"},{"data": "user_id"},
-                {
-                    "data": "action",
-                    "orderable": false,
-                    "className": "text-center"
-                }
             ],
             order: [[0, 'desc']],
             rowCallback: function (row, data, iDisplayIndex) {

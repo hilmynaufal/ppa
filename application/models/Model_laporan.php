@@ -18,16 +18,25 @@ class Model_laporan extends CI_Model
 	// get all
 	function get_all($tahun = NULL)
 	{
-		$this->db->select('tbl_ppa_berita_acara.*, rk.name as korban_kab_nama, rkc.name as korban_kec_nama, rv.name as korban_desa_nama');
-		$this->db->from($this->table);
-		$this->db->join('reg_regencies rk', 'rk.id = tbl_ppa_berita_acara.korban_kab', 'left');
-		$this->db->join('reg_districts rkc', 'rkc.id = tbl_ppa_berita_acara.korban_kec', 'left');
-		$this->db->join('reg_villages rv', 'rv.id = tbl_ppa_berita_acara.korban_desa', 'left');
-		$this->db->order_by('tbl_ppa_berita_acara.' . $this->id, $this->order);
+		$where = '';
 		if ($tahun) {
-			$this->db->where("YEAR(tbl_ppa_berita_acara.berita_acara_tgl)", $tahun);
+			$where = "WHERE YEAR(t.berita_acara_tgl) = " . $this->db->escape($tahun);
 		}
-		return $this->db->get()->result();
+		$sql = "SELECT
+					t.*,
+					reg_regencies.name  AS korban_kab_nama,
+					reg_districts.name  AS korban_kec_nama,
+					reg_villages.name   AS korban_desa_nama,
+					GROUP_CONCAT(DISTINCT p.layanan_jenis ORDER BY p.layanan_id SEPARATOR ', ') AS layanan_jenis
+				FROM tbl_ppa_berita_acara t
+				LEFT JOIN reg_regencies  ON reg_regencies.id  = t.korban_kab
+				LEFT JOIN reg_districts  ON reg_districts.id  = t.korban_kec
+				LEFT JOIN reg_villages   ON reg_villages.id   = t.korban_desa
+				LEFT JOIN tbl_ppa_pendampingan p ON p.kode_beritaacara = t.berita_acara_kode
+				$where
+				GROUP BY t.berita_acara_id
+				ORDER BY t.berita_acara_id DESC";
+		return $this->db->query($sql)->result();
 	}
 
 	// get data by id

@@ -105,7 +105,7 @@
                                                     <td><?php echo $d->korban_jeniskelamin; ?></td>
                                                     <td><?php echo $usia_display; ?></td>
                                                     <td><?php echo $alamat; ?></td>
-                                                    <td><?php echo $d->lapor_kategori; ?></td>
+                                                    <td><?php echo $d->layanan_jenis; ?></td>
                                                     <td><?php echo $d->berita_acara_kronologi; ?></td>
                                                     <td><?php echo $d->berita_acara_keterangan; ?></td>
                                                     <td><?php echo $d->korban_telepon; ?></td>
