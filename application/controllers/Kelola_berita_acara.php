@@ -53,11 +53,13 @@ class Kelola_berita_acara extends CI_Controller
 				'pelapor_kab' => $this->get_region_name('reg_regencies', $row->pelapor_kab),
 				'pelapor_kec' => $this->get_region_name('reg_districts', $row->pelapor_kec),
 				'pelapor_desa' => $this->get_region_name('reg_villages', $row->pelapor_desa),
+				'pelapor_telepon' => $row->pelapor_telepon,
 				'korban_nik' => $row->korban_nik,
 				'korban_nama' => $row->korban_nama,
 				'korban_jeniskelamin' => $row->korban_jeniskelamin,
 				'korban_agama' => $row->korban_agama,
 				'korban_tempat' => $row->korban_tempat,
+				'korban_alamat' => $row->korban_alamat,
 				'korban_tgl_lahir' => $row->korban_tgl_lahir,
 				'korban_prop' => $row->korban_prop,
 				'korban_kab' => $this->get_region_name('reg_regencies', $row->korban_kab),
@@ -157,6 +159,7 @@ class Kelola_berita_acara extends CI_Controller
 			'korban_jeniskelamin' => set_value('korban_jeniskelamin'),
 			'korban_agama' => set_value('korban_agama'),
 			'korban_tempat' => set_value('korban_tempat'),
+			'korban_alamat' => set_value('korban_alamat'),
 			'korban_tgl_lahir' => set_value('korban_tgl_lahir'),
 			'korban_prop' => set_value('korban_prop'),
 			'korban_kab' => set_value('korban_kab'),
@@ -269,6 +272,7 @@ class Kelola_berita_acara extends CI_Controller
 				'korban_jeniskelamin' => $this->input->post('korban_jeniskelamin', TRUE),
 				'korban_agama' => $this->input->post('korban_agama', TRUE),
 				'korban_tempat' => $this->input->post('korban_tempat', TRUE),
+				'korban_alamat' => $this->input->post('korban_alamat', TRUE),
 				'korban_tgl_lahir' => $this->input->post('korban_tgl_lahir', TRUE),
 				'korban_prop' => $this->input->post('korban_prop', TRUE),
 				'korban_kab' => $this->input->post('korban_kab', TRUE),
@@ -372,6 +376,7 @@ class Kelola_berita_acara extends CI_Controller
 				'korban_jeniskelamin' => set_value('korban_jeniskelamin', $row->korban_jeniskelamin),
 				'korban_agama' => set_value('korban_agama', $row->korban_agama),
 				'korban_tempat' => set_value('korban_tempat', $row->korban_tempat),
+				'korban_alamat' => set_value('korban_alamat', $row->korban_alamat),
 				'korban_tgl_lahir' => set_value('korban_tgl_lahir', $row->korban_tgl_lahir),
 				'korban_prop' => set_value('korban_prop', $row->korban_prop),
 				'korban_kab' => set_value('korban_kab', $row->korban_kab),
@@ -477,6 +482,7 @@ class Kelola_berita_acara extends CI_Controller
 				'korban_jeniskelamin' => $this->input->post('korban_jeniskelamin', TRUE),
 				'korban_agama' => $this->input->post('korban_agama', TRUE),
 				'korban_tempat' => $this->input->post('korban_tempat', TRUE),
+				'korban_alamat' => $this->input->post('korban_alamat', TRUE),
 				'korban_tgl_lahir' => $this->input->post('korban_tgl_lahir', TRUE),
 				'korban_prop' => $this->input->post('korban_prop', TRUE),
 				'korban_kab' => $this->input->post('korban_kab', TRUE),
@@ -639,6 +645,7 @@ class Kelola_berita_acara extends CI_Controller
 		xlsWriteLabel($tablehead, $kolomhead++, "Korban Jeniskelamin");
 		xlsWriteLabel($tablehead, $kolomhead++, "Korban Agama");
 		xlsWriteLabel($tablehead, $kolomhead++, "Korban Tempat");
+		xlsWriteLabel($tablehead, $kolomhead++, "Korban Alamat");
 		xlsWriteLabel($tablehead, $kolomhead++, "Korban Tgl Lahir");
 		xlsWriteLabel($tablehead, $kolomhead++, "Korban Prop");
 		xlsWriteLabel($tablehead, $kolomhead++, "Korban Kab");
@@ -702,6 +709,7 @@ class Kelola_berita_acara extends CI_Controller
 			xlsWriteLabel($tablebody, $kolombody++, $data->korban_jeniskelamin);
 			xlsWriteLabel($tablebody, $kolombody++, $data->korban_agama);
 			xlsWriteLabel($tablebody, $kolombody++, $data->korban_tempat);
+			xlsWriteLabel($tablebody, $kolombody++, $data->korban_alamat);
 			xlsWriteLabel($tablebody, $kolombody++, $data->korban_tgl_lahir);
 			xlsWriteLabel($tablebody, $kolombody++, $data->korban_prop);
 			xlsWriteLabel($tablebody, $kolombody++, $data->korban_kab);
@@ -770,6 +778,7 @@ class Kelola_berita_acara extends CI_Controller
 				'korban_jeniskelamin' => $row->korban_jeniskelamin,
 				'korban_agama' => $row->korban_agama,
 				'korban_tempat' => $row->korban_tempat,
+				'korban_alamat' => $row->korban_alamat,
 				'korban_tgl_lahir' => $row->korban_tgl_lahir,
 				'korban_prop' => $row->korban_prop,
 				'korban_kab' => $this->get_region_name('reg_regencies', $row->korban_kab),

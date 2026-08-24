@@ -124,7 +124,12 @@
 				<td>Korban Tempat</td>
 				<td><?php echo $korban_tempat; ?></td>
 			</tr>
-	
+
+			<tr>
+				<td>Alamat Korban</td>
+				<td><?php echo $korban_alamat; ?></td>
+			</tr>
+
 			<tr>
 				<td>Korban Tgl Lahir</td>
 				<td><?php echo $korban_tgl_lahir; ?></td>

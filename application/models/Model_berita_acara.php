@@ -19,7 +19,7 @@ class Model_berita_acara extends CI_Model
     function json()
     {
 
-        $this->datatables->select('berita_acara_id,berita_acara_status,berita_acara_dihentikan,berita_acara_kode,berita_acara_tgl,berita_acara_hari,berita_acara_kronologi,berita_acara_penerima_laporan,berita_acara_kepala_uptd,pelapor_nama,pelapor_tgl,pelapor_tempat,pelapor_idusers,pelapor_nik,pelapor_pekerjaan,pelapor_telepon,pelapor_kab,pelapor_kec,pelapor_desa,korban_nik,korban_nama,korban_jeniskelamin,korban_agama,korban_tempat,korban_tgl_lahir,korban_prop,korban_kab,korban_kec,korban_desa,korban_foto1,korban_foto2,korban_email,korban_telepon,korban_tglkejadian,pelaku_nama,pelaku_jenis_kelamin,pelaku_usia,pelaku_hubungan,pelaku_pendidikan,pelaku_alamat,pelaku_prop,pelaku_kab,pelaku_kec,pelaku_desa,pelaku_nik,lapor_anonim,lapor_rahasia,lapor_status,lapor_kategori,lapor_disposisi');
+        $this->datatables->select('berita_acara_id,berita_acara_status,berita_acara_dihentikan,berita_acara_kode,berita_acara_tgl,berita_acara_hari,berita_acara_kronologi,berita_acara_penerima_laporan,berita_acara_kepala_uptd,pelapor_nama,pelapor_tgl,pelapor_tempat,pelapor_idusers,pelapor_nik,pelapor_pekerjaan,pelapor_telepon,pelapor_kab,pelapor_kec,pelapor_desa,korban_nik,korban_nama,korban_jeniskelamin,korban_agama,korban_tempat,korban_alamat,korban_tgl_lahir,korban_prop,korban_kab,korban_kec,korban_desa,korban_foto1,korban_foto2,korban_email,korban_telepon,korban_tglkejadian,pelaku_nama,pelaku_jenis_kelamin,pelaku_usia,pelaku_hubungan,pelaku_pendidikan,pelaku_alamat,pelaku_prop,pelaku_kab,pelaku_kec,pelaku_desa,pelaku_nik,lapor_anonim,lapor_rahasia,lapor_status,lapor_kategori,lapor_disposisi');
         $this->datatables->from('tbl_ppa_berita_acara');
         //add this line for join
         $this->datatables->join('tbl_user', 'tbl_ppa_berita_acara.user_id = tbl_user.id_users');
@@ -96,6 +96,7 @@ class Model_berita_acara extends CI_Model
         $this->db->or_like('korban_jeniskelamin', $q);
         $this->db->or_like('korban_agama', $q);
         $this->db->or_like('korban_tempat', $q);
+        $this->db->or_like('korban_alamat', $q);
         $this->db->or_like('korban_tgl_lahir', $q);
         $this->db->or_like('korban_prop', $q);
         $this->db->or_like('korban_kab', $q);
